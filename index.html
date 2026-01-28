@@ -1,0 +1,505 @@
+<!doctype html>
+<html lang="id">
+ <head>
+  <meta charset="UTF-8">
+  <title>Budapest Travel - Destinasi Wisata Terbaik</title>
+  <meta name="description" content="Jelajahi keindahan Budapest - destinasi wisata terbaik di Eropa dengan pemandangan menakjubkan, sejarah kaya, dan budaya yang memukau">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"><!-- SDKs -->
+  <script src="/_sdk/data_sdk.js"></script>
+  <script src="/_sdk/element_sdk.js"></script><!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script><!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body {
+      box-sizing: border-box;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg-primary: #0f172a;
+      --bg-secondary: #1e293b;
+      --text-primary: #f1f5f9;
+      --accent-primary: #3b82f6;
+      --accent-secondary: #8b5cf6;
+    }
+
+    body.light-mode {
+      --bg-primary: #ffffff;
+      --bg-secondary: #f8fafc;
+      --text-primary: #1e293b;
+      --accent-primary: #2563eb;
+      --accent-secondary: #7c3aed;
+    }
+
+    html, body {
+      height: 100%;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      transition: background 0.3s ease, color 0.3s ease;
+      overflow-x: hidden;
+    }
+
+    .gradient-text {
+      background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .glass-effect {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    body.light-mode .glass-effect {
+      background: rgba(255, 255, 255, 0.8);
+      border: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .animate-fade-in {
+      animation: fadeIn 0.6s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .parallax-bg {
+      background-image: linear-gradient(to bottom right, rgba(15, 23, 42, 0.75), rgba(15, 23, 42, 0.9)), 
+        url('https://images.pexels.com/photos/460680/pexels-photo-460680.jpeg?auto=compress&cs=tinysrgb&w=1200');
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-attachment: scroll;
+    }
+
+    .destination-card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .destination-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Chatbot */
+    .chatbot-widget {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 1000;
+    }
+
+    .chatbot-button {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(59, 130, 246, 0.4);
+      transition: transform 0.3s ease;
+    }
+
+    .chatbot-button:hover {
+      transform: scale(1.1);
+    }
+
+    .chatbot-window {
+      position: absolute;
+      bottom: 80px;
+      right: 0;
+      width: 320px;
+      height: 420px;
+      background: var(--bg-secondary);
+      border-radius: 20px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+      display: none;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .chatbot-window.active {
+      display: flex;
+    }
+
+    .chat-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 12px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .chat-bubble {
+      max-width: 80%;
+      padding: 8px 12px;
+      border-radius: 12px;
+      font-size: 0.85rem;
+      line-height: 1.4;
+    }
+
+    .chat-bubble.user {
+      margin-left: auto;
+      background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+      color: #f9fafb;
+      border-bottom-right-radius: 2px;
+    }
+
+    .chat-bubble.bot {
+      margin-right: auto;
+      background: rgba(15, 23, 42, 0.85);
+      border-bottom-left-radius: 2px;
+    }
+
+    body.light-mode .chat-bubble.bot {
+      background: rgba(226, 232, 240, 0.95);
+      color: #0f172a;
+    }
+
+    .chat-input-wrapper {
+      border-top: 1px solid rgba(148, 163, 184, 0.4);
+      padding: 8px;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .chat-input-wrapper input {
+      flex: 1;
+      border-radius: 999px;
+      border: none;
+      padding: 6px 12px;
+      font-size: 0.85rem;
+      outline: none;
+      background: rgba(15, 23, 42, 0.85);
+      color: #e5e7eb;
+    }
+
+    body.light-mode .chat-input-wrapper input {
+      background: #e5e7eb;
+      color: #111827;
+    }
+
+    .chat-input-wrapper button {
+      border-radius: 999px;
+      padding: 6px 12px;
+      font-size: 0.8rem;
+    }
+
+    /* Custom scrollbars (subtle) */
+    .chat-messages::-webkit-scrollbar {
+      width: 6px;
+    }
+    .chat-messages::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .chat-messages::-webkit-scrollbar-thumb {
+      background: rgba(148, 163, 184, 0.6);
+      border-radius: 999px;
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+ </head>
+ <body class="min-h-full flex flex-col">
+  <header class="w-full">
+   <nav class="w-full max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+    <div class="flex items-center gap-2">
+     <div class="w-9 h-9 rounded-full flex items-center justify-center bg-gradient-to-tr from-blue-500 to-purple-500"><i class="fa-solid fa-city text-white text-lg" aria-hidden="true"></i>
+     </div>
+     <div>
+      <p class="text-xs uppercase tracking-[0.2em] text-slate-400">Discover</p>
+      <p class="text-sm font-semibold">Budapest Travel</p>
+     </div>
+    </div>
+    <div class="hidden md:flex items-center gap-6 text-sm"><a href="#destinasi" class="hover:text-blue-400 transition-colors">Destinasi</a> <a href="#pengalaman" class="hover:text-blue-400 transition-colors">Pengalaman</a> <a href="#tips" class="hover:text-blue-400 transition-colors">Tips</a>
+    </div>
+    <div class="flex items-center gap-2"><button id="themeToggle" class="glass-effect text-xs px-3 py-2 rounded-full flex items-center gap-2 hover:bg-slate-800/40 transition-colors"> <i class="fa-solid fa-moon text-yellow-300" aria-hidden="true"></i> <span>Mode Malam</span> </button>
+    </div>
+   </nav>
+  </header>
+  <main class="flex-1 w-full"><!-- HERO -->
+   <section class="parallax-bg">
+    <div class="w-full max-w-6xl mx-auto px-4 pt-10 pb-16 md:pt-16 md:pb-20 flex flex-col md:flex-row gap-10 items-center"><!-- Left -->
+     <div class="md:w-1/2 space-y-6 animate-fade-in">
+      <h1 class="text-3xl md:text-5xl font-bold leading-tight">Jelajahi <span class="gradient-text">Keajaiban Budapest</span></h1>
+      <p class="text-sm md:text-base text-slate-300 max-w-md">Kota yang dipenuhi jembatan ikonik, pemandian air panas bersejarah, dan arsitektur menawan di tepi Sungai Danube. Temukan sisi romantis dan klasik Eropa Timur dalam satu perjalanan tak terlupakan.</p>
+      <div class="flex flex-wrap gap-3"><button class="px-4 py-2.5 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 text-xs md:text-sm font-semibold shadow-lg shadow-blue-500/40 hover:shadow-blue-500/60 transition-transform transform hover:-translate-y-0.5"> Rencanakan Perjalananmu </button> <button class="px-4 py-2.5 rounded-full glass-effect text-xs md:text-sm hover:bg-slate-800/40 transition-colors"> Lihat Paket Wisata </button>
+      </div>
+      <div class="grid grid-cols-3 gap-4 text-xs md:text-sm">
+       <div class="glass-effect rounded-2xl px-4 py-3">
+        <p class="font-semibold text-lg md:text-xl">+120K</p>
+        <p class="text-slate-300 text-[0.72rem] md:text-xs">Wisatawan per tahun</p>
+       </div>
+       <div class="glass-effect rounded-2xl px-4 py-3">
+        <p class="font-semibold text-lg md:text-xl">4.9/5</p>
+        <p class="text-slate-300 text-[0.72rem] md:text-xs">Rating pengalaman</p>
+       </div>
+       <div class="glass-effect rounded-2xl px-4 py-3">
+        <p class="font-semibold text-lg md:text-xl">365</p>
+        <p class="text-slate-300 text-[0.72rem] md:text-xs">Hari penuh pesona</p>
+       </div>
+      </div>
+     </div><!-- Right - card grid -->
+     <div class="md:w-1/2 w-full grid grid-cols-2 gap-4">
+      <div class="destination-card glass-effect rounded-3xl p-4 flex flex-col gap-3">
+       <div class="w-full h-28 md:h-36 rounded-2xl overflow-hidden"><img src="https://images.unsplash.com/photo-1541849546-216549ae216d?w=600&amp;q=80" alt="Pemandangan Sungai Danube dan jembatan Chain Bridge di malam hari" class="w-full h-full object-cover" onerror="this.src=''; this.alt='Gambar tidak dapat dimuat'; this.style.display='none';">
+       </div>
+       <div>
+        <h3 class="font-semibold text-sm md:text-base">Sungai Danube</h3>
+        <p class="text-[0.7rem] md:text-xs text-slate-300 mt-1">Menyusuri sungai dengan kapal pesiar malam memberi pemandangan kota yang berkilau.</p>
+       </div>
+       <div class="flex items-center justify-between text-[0.7rem] md:text-xs"><span class="flex items-center gap-2 text-slate-300"> <i class="fa-solid fa-clock text-blue-400 text-xs" aria-hidden="true"></i> 2–3 jam </span> <span class="text-blue-400 font-medium">Tur populer</span>
+       </div>
+      </div>
+      <div class="destination-card glass-effect rounded-3xl p-4 flex flex-col gap-3">
+       <div class="w-full h-28 md:h-36 rounded-2xl overflow-hidden"><img src="https://images.unsplash.com/photo-1555854877-bab0e564b8d5?w=600&amp;q=80" alt="Pemandian air panas Széchenyi yang ikonik dan selalu hidup" class="w-full h-full object-cover" onerror="this.src=''; this.alt='Gambar tidak dapat dimuat'; this.style.display='none';">
+       </div>
+       <div>
+        <h3 class="font-semibold text-sm md:text-base">Pemandian Széchenyi</h3>
+        <p class="text-[0.7rem] md:text-xs text-slate-300 mt-1">Nikmati spa termal outdoor, kolam hangat, dan suasana relaksasi ala Eropa klasik.</p>
+       </div>
+       <div class="flex items-center justify-between text-[0.7rem] md:text-xs"><span class="flex items-center gap-2 text-slate-300"> <i class="fa-solid fa-spa text-purple-400 text-xs" aria-hidden="true"></i> Seharian </span> <span class="text-purple-300 font-medium">Wajib coba</span>
+       </div>
+      </div>
+      <div class="destination-card glass-effect rounded-3xl p-4 flex flex-col gap-3 col-span-2">
+       <div class="w-full h-28 md:h-40 rounded-2xl overflow-hidden"><img src="https://images.unsplash.com/photo-1467269204594-9661b134dd2b?w=800&amp;q=80" alt="Panorama Kastil Buda dan Parliament Building dari Fisherman's Bastion" class="w-full h-full object-cover" onerror="this.src=''; this.alt='Gambar tidak dapat dimuat'; this.style.display='none';">
+       </div>
+       <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+        <div>
+         <h3 class="font-semibold text-sm md:text-base">Fisherman's Bastion</h3>
+         <p class="text-[0.7rem] md:text-xs text-slate-300 mt-1">Spot foto terbaik di Budapest dengan lengkungan putih klasik dan pemandangan kota.</p>
+        </div>
+        <div class="space-y-1 text-[0.7rem] md:text-xs">
+         <p class="flex items-center gap-2"><i class="fa-solid fa-camera text-blue-300 text-xs" aria-hidden="true"></i> <span>Golden hour paling cantik</span></p>
+         <p class="flex items-center gap-2"><i class="fa-solid fa-mountain-city text-indigo-300 text-xs" aria-hidden="true"></i> <span>Lokasi di Bukit Buda</span></p>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- Destinasi -->
+   <section id="destinasi" class="w-full">
+    <div class="w-full max-w-6xl mx-auto px-4 py-10 md:py-14">
+     <h2 class="text-xl md:text-2xl font-semibold mb-2">Destinasi Ikonik Budapest</h2>
+     <p class="text-xs md:text-sm text-slate-300 max-w-2xl mb-6">Dari kastil bersejarah hingga kafe tepi sungai, Budapest menawarkan kombinasi sempurna antara budaya, sejarah, dan hiburan modern.</p>
+     <div class="grid gap-4 md:grid-cols-3">
+      <article class="glass-effect rounded-2xl p-4 destination-card">
+       <h3 class="font-semibold text-sm md:text-base mb-2">Hungarian Parliament Building</h3>
+       <p class="text-[0.72rem] md:text-xs text-slate-300 mb-3">Gedung parlemen megah dengan arsitektur neo-gotik di tepi Danube, salah satu ikon Budapest paling terkenal.</p>
+       <ul class="space-y-1 text-[0.72rem] md:text-xs text-slate-300">
+        <li class="flex gap-2"><span class="text-blue-400"><i class="fa-solid fa-circle-check text-[0.6rem]" aria-hidden="true"></i></span> Tur dalam ruangan tersedia</li>
+        <li class="flex gap-2"><span class="text-blue-400"><i class="fa-solid fa-circle-check text-[0.6rem]" aria-hidden="true"></i></span> Pemandangan terbaik dari sisi Buda</li>
+       </ul>
+      </article>
+      <article class="glass-effect rounded-2xl p-4 destination-card">
+       <h3 class="font-semibold text-sm md:text-base mb-2">Buda Castle</h3>
+       <p class="text-[0.72rem] md:text-xs text-slate-300 mb-3">Kompleks istana yang memayungi museum, galeri seni, dan pemandangan kota yang spektakuler.</p>
+       <ul class="space-y-1 text-[0.72rem] md:text-xs text-slate-300">
+        <li class="flex gap-2"><span class="text-blue-400"><i class="fa-solid fa-circle-check text-[0.6rem]" aria-hidden="true"></i></span> Naik funicular ke puncak</li>
+        <li class="flex gap-2"><span class="text-blue-400"><i class="fa-solid fa-circle-check text-[0.6rem]" aria-hidden="true"></i></span> Cahaya malam yang dramatis</li>
+       </ul>
+      </article>
+      <article class="glass-effect rounded-2xl p-4 destination-card">
+       <h3 class="font-semibold text-sm md:text-base mb-2">Andrássy Avenue</h3>
+       <p class="text-[0.72rem] md:text-xs text-slate-300 mb-3">Jalan boulevard elegan dengan butik, kafe, dan gedung opera yang memesona.</p>
+       <ul class="space-y-1 text-[0.72rem] md:text-xs text-slate-300">
+        <li class="flex gap-2"><span class="text-blue-400"><i class="fa-solid fa-circle-check text-[0.6rem]" aria-hidden="true"></i></span> Cocok untuk walking tour</li>
+        <li class="flex gap-2"><span class="text-blue-400"><i class="fa-solid fa-circle-check text-[0.6rem]" aria-hidden="true"></i></span> Dekat dengan Heroes' Square</li>
+       </ul>
+      </article>
+     </div>
+    </div>
+   </section><!-- Pengalaman & Tips -->
+   <section id="pengalaman" class="w-full">
+    <div class="w-full max-w-6xl mx-auto px-4 pb-12 md:pb-16 grid md:grid-cols-[1.4fr,1fr] gap-8"><!-- Pengalaman -->
+     <div class="space-y-4">
+      <h2 class="text-xl md:text-2xl font-semibold">Pengalaman Wajib di Budapest</h2>
+      <div class="space-y-3 text-xs md:text-sm text-slate-300">
+       <p>Rasakan suasana malam di tepi Sungai Danube dengan lampu kota yang berkilau, lalu akhiri hari dengan berendam di pemandian air panas. Di pagi hari, jelajahi kafe-kafe tersembunyi di gang-gang tua dan nikmati kue khas Hungaria, <span class="font-semibold text-sky-300">kürtőskalács</span>.</p>
+       <p>Budapest juga dikenal dengan <span class="font-semibold text-sky-300">ruin bars</span> — bar unik yang dibangun di dalam gedung tua dengan dekorasi eklektik dan suasana yang sangat hidup.</p>
+      </div>
+      <div class="grid grid-cols-2 gap-3 text-[0.72rem] md:text-xs">
+       <div class="glass-effect rounded-2xl p-3 flex gap-3 items-start">
+        <div class="w-7 h-7 rounded-full flex items-center justify-center bg-gradient-to-tr from-blue-500 to-cyan-400 text-xs"><i class="fa-solid fa-train-subway" aria-hidden="true"></i>
+        </div>
+        <div>
+         <p class="font-semibold mb-0.5">Transportasi Mudah</p>
+         <p class="text-slate-300">Metro, tram, dan bus terhubung baik, memudahkanmu menjelajah setiap sudut kota.</p>
+        </div>
+       </div>
+       <div class="glass-effect rounded-2xl p-3 flex gap-3 items-start">
+        <div class="w-7 h-7 rounded-full flex items-center justify-center bg-gradient-to-tr from-purple-500 to-pink-400 text-xs"><i class="fa-solid fa-utensils" aria-hidden="true"></i>
+        </div>
+        <div>
+         <p class="font-semibold mb-0.5">Kuliner Lezat</p>
+         <p class="text-slate-300">Cicipi goulash hangat, chimney cake manis, dan kopi ala Budapest.</p>
+        </div>
+       </div>
+      </div>
+     </div><!-- Tips -->
+     <aside id="tips" class="glass-effect rounded-2xl p-4 md:p-5 h-fit">
+      <h2 class="text-base md:text-lg font-semibold mb-3">Tips Singkat untuk Traveler</h2>
+      <ul class="space-y-2 text-[0.72rem] md:text-xs text-slate-200">
+       <li class="flex gap-2"><span class="text-blue-400 mt-0.5"><i class="fa-solid fa-location-dot text-[0.65rem]" aria-hidden="true"></i></span>
+        <div>
+         <p class="font-medium">Musim terbaik</p>
+         <p class="text-slate-300">Musim semi (Apr–Jun) &amp; gugur (Sep–Okt) dengan cuaca sejuk dan langit cerah.</p>
+        </div></li>
+       <li class="flex gap-2"><span class="text-blue-400 mt-0.5"><i class="fa-solid fa-ticket text-[0.65rem]" aria-hidden="true"></i></span>
+        <div>
+         <p class="font-medium">Budapest Card</p>
+         <p class="text-slate-300">Kartu wisata yang memberikan akses transportasi umum dan diskon masuk atraksi.</p>
+        </div></li>
+       <li class="flex gap-2"><span class="text-blue-400 mt-0.5"><i class="fa-solid fa-language text-[0.65rem]" aria-hidden="true"></i></span>
+        <div>
+         <p class="font-medium">Bahasa &amp; mata uang</p>
+         <p class="text-slate-300">Bahasa Hungaria, mata uang Forint (HUF). Bahasa Inggris cukup umum di area wisata.</p>
+        </div></li>
+       <li class="flex gap-2"><span class="text-blue-400 mt-0.5"><i class="fa-solid fa-temperature-half text-[0.65rem]" aria-hidden="true"></i></span>
+        <div>
+         <p class="font-medium">Cuaca</p>
+         <p class="text-slate-300">Musim dingin bisa sangat dingin, siapkan pakaian hangat jika datang Des–Feb.</p>
+        </div></li>
+      </ul>
+     </aside>
+    </div>
+   </section>
+  </main>
+  <footer class="w-full border-t border-slate-800/80">
+   <div class="w-full max-w-6xl mx-auto px-4 py-4 flex flex-col md:flex-row items-center justify-between gap-3 text-[0.72rem] md:text-xs text-slate-400">
+    <p>© 2025 Budapest Travel Guide. Inspirasi perjalananmu ke Eropa Tengah.</p>
+    <p>Desain interaktif oleh Canva Code.</p>
+   </div>
+  </footer><!-- Chatbot -->
+  <div class="chatbot-widget" aria-label="Asisten perjalanan Budapest">
+   <div class="chatbot-window glass-effect" id="chatbotWindow" role="dialog" aria-modal="false" aria-labelledby="chatbotTitle">
+    <div class="flex items-center justify-between px-4 py-3 border-b border-slate-700/70">
+     <div>
+      <p id="chatbotTitle" class="text-sm font-semibold">Asisten Budapest</p>
+      <p class="text-[0.7rem] text-slate-400">Tanya apa saja tentang perjalananmu</p>
+     </div><button id="chatbotClose" class="text-slate-400 hover:text-slate-200 text-xs" aria-label="Tutup chatbot"> <i class="fa-solid fa-xmark" aria-hidden="true"></i> </button>
+    </div>
+    <div class="chat-messages" id="chatMessages" aria-live="polite">
+     <div class="chat-bubble bot">
+      Hai! Aku bisa bantu kasih rekomendasi destinasi, waktu kunjungan terbaik, atau tips traveling di Budapest. Apa yang ingin kamu tahu?
+     </div>
+    </div>
+    <form class="chat-input-wrapper" id="chatForm"><label for="chatInput" class="sr-only">Tulis pertanyaanmu</label> <input id="chatInput" type="text" autocomplete="off" placeholder="Tanya: tempat terbaik, cuaca, budget..."> <button type="submit" class="bg-gradient-to-r from-blue-500 to-purple-500 text-white text-xs font-semibold px-3 py-1.5 hover:opacity-90"> Kirim </button>
+    </form>
+   </div><button class="chatbot-button" id="chatbotToggle" aria-label="Buka chatbot asisten Budapest"> <i class="fa-solid fa-comments text-white text-xl" aria-hidden="true"></i> </button>
+  </div>
+  <script>
+  // Theme toggle
+  const themeToggleBtn = document.getElementById('themeToggle');
+  const themeTextSpan = themeToggleBtn.querySelector('span');
+  const themeIcon = themeToggleBtn.querySelector('i');
+
+  function applyTheme() {
+    const mode = localStorage.getItem('bp_theme') || 'dark';
+    if (mode === 'light') {
+      document.body.classList.add('light-mode');
+      themeTextSpan.textContent = 'Mode Terang';
+      themeIcon.classList.remove('fa-moon');
+      themeIcon.classList.add('fa-sun');
+      themeIcon.classList.remove('text-yellow-300');
+      themeIcon.classList.add('text-amber-400');
+    } else {
+      document.body.classList.remove('light-mode');
+      themeTextSpan.textContent = 'Mode Malam';
+      themeIcon.classList.remove('fa-sun', 'text-amber-400');
+      themeIcon.classList.add('fa-moon', 'text-yellow-300');
+    }
+  }
+
+  applyTheme();
+
+  themeToggleBtn.addEventListener('click', () => {
+    const current = localStorage.getItem('bp_theme') || 'dark';
+    const next = current === 'dark' ? 'light' : 'dark';
+    localStorage.setItem('bp_theme', next);
+    applyTheme();
+  });
+
+  // Chatbot simple rules
+  const chatbotToggle = document.getElementById('chatbotToggle');
+  const chatbotWindow = document.getElementById('chatbotWindow');
+  const chatbotClose = document.getElementById('chatbotClose');
+  const chatForm = document.getElementById('chatForm');
+  const chatInput = document.getElementById('chatInput');
+  const chatMessages = document.getElementById('chatMessages');
+
+  function toggleChatbot(open) {
+    const isOpen = open !== undefined ? open : !chatbotWindow.classList.contains('active');
+    if (isOpen) {
+      chatbotWindow.classList.add('active');
+      chatInput.focus();
+    } else {
+      chatbotWindow.classList.remove('active');
+    }
+  }
+
+  chatbotToggle.addEventListener('click', () => toggleChatbot(true));
+  chatbotClose.addEventListener('click', () => toggleChatbot(false));
+
+  function addMessage(text, sender) {
+    const bubble = document.createElement('div');
+    bubble.className = 'chat-bubble ' + (sender === 'user' ? 'user' : 'bot');
+    bubble.textContent = text;
+    chatMessages.appendChild(bubble);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+  }
+
+  function generateBotReply(message) {
+    const lower = message.toLowerCase();
+
+    if (lower.includes('cuaca') || lower.includes('weather')) {
+      return 'Budapest memiliki empat musim. Musim semi dan gugur adalah waktu terbaik dengan suhu sejuk dan nyaman untuk berjalan kaki.';
+    }
+    if (lower.includes('berapa hari') || lower.includes('lama') || lower.includes('hari')) {
+      return 'Idealnya, habiskan 3–4 hari di Budapest agar kamu sempat menikmati destinasi utama, pemandian air panas, dan wisata kuliner.';
+    }
+    if (lower.includes('budget') || lower.includes('biaya') || lower.includes('harga')) {
+      return 'Budget backpacker rata-rata sekitar €40–60 per hari, sedangkan perjalanan nyaman sekitar €80–120 per hari, belum termasuk tiket pesawat.';
+    }
+    if (lower.includes('malam') || lower.includes('night') || lower.includes('ruin bar')) {
+      return 'Untuk malam hari, kamu bisa menyusuri Danube Promenade, menikmati city lights dari Buda Castle, atau mengunjungi ruin bars di distrik 7.';
+    }
+    if (lower.includes('makanan') || lower.includes('kuliner') || lower.includes('makan')) {
+      return 'Coba goulash, lángos (roti goreng dengan topping), chimney cake (kürtőskalács), dan kopi di kafe klasik di pusat kota.';
+    }
+    if (lower.includes('transport') || lower.includes('metro') || lower.includes('kereta') || lower.includes('bus') || lower.includes('tram')) {
+      return 'Budapest punya jaringan metro, tram, dan bus yang terintegrasi. Kamu bisa membeli tiket harian atau Budapest Card untuk akses tak terbatas.';
+    }
+
+    return 'Seru! Untuk itu, kamu bisa mulai dari area pusat kota (District V), lalu lanjut ke Buda Castle dan Fisherman\'s Bastion. Jika mau, sebutkan minatmu (kuliner, sejarah, foto, atau relaksasi), aku bisa sarankan rute lebih spesifik.';
+  }
+
+  chatForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const message = chatInput.value.trim();
+    if (!message) return;
+    addMessage(message, 'user');
+    chatInput.value = '';
+    setTimeout(() => {
+      const reply = generateBotReply(message);
+      addMessage(reply, 'bot');
+    }, 400);
+  });
+</script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9a0d7edde3e8807d',t:'MTc2MzUzMjExMy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
