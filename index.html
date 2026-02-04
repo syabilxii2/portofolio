@@ -1,505 +1,718 @@
 <!doctype html>
-<html lang="id">
+<html lang="id" class="h-full">
  <head>
   <meta charset="UTF-8">
-  <title>Budapest Travel - Destinasi Wisata Terbaik</title>
-  <meta name="description" content="Jelajahi keindahan Budapest - destinasi wisata terbaik di Eropa dengan pemandangan menakjubkan, sejarah kaya, dan budaya yang memukau">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"><!-- SDKs -->
-  <script src="/_sdk/data_sdk.js"></script>
-  <script src="/_sdk/element_sdk.js"></script><!-- Tailwind -->
-  <script src="https://cdn.tailwindcss.com"></script><!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Syabil Jafa Nararya - Portfolio</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet">
   <style>
     body {
       box-sizing: border-box;
     }
-
+    
     * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+      scroll-behavior: smooth;
     }
-
-    :root {
-      --bg-primary: #0f172a;
-      --bg-secondary: #1e293b;
-      --text-primary: #f1f5f9;
-      --accent-primary: #3b82f6;
-      --accent-secondary: #8b5cf6;
+    
+    .font-display {
+      font-family: 'Playfair Display', serif;
     }
-
-    body.light-mode {
-      --bg-primary: #ffffff;
-      --bg-secondary: #f8fafc;
-      --text-primary: #1e293b;
-      --accent-primary: #2563eb;
-      --accent-secondary: #7c3aed;
+    
+    .font-body {
+      font-family: 'Inter', sans-serif;
     }
-
-    html, body {
-      height: 100%;
+    
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
-
-    body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      background: var(--bg-primary);
-      color: var(--text-primary);
-      transition: background 0.3s ease, color 0.3s ease;
-      overflow-x: hidden;
+    
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0px);
+      }
+      50% {
+        transform: translateY(-20px);
+      }
     }
-
+    
+    @keyframes pulse-glow {
+      0%, 100% {
+        box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+      }
+      50% {
+        box-shadow: 0 0 40px rgba(212, 175, 55, 0.6);
+      }
+    }
+    
+    .animate-fade-in-up {
+      animation: fadeInUp 0.8s ease-out forwards;
+    }
+    
+    .animate-float {
+      animation: float 6s ease-in-out infinite;
+    }
+    
+    .animate-delay-100 { animation-delay: 0.1s; }
+    .animate-delay-200 { animation-delay: 0.2s; }
+    .animate-delay-300 { animation-delay: 0.3s; }
+    .animate-delay-400 { animation-delay: 0.4s; }
+    .animate-delay-500 { animation-delay: 0.5s; }
+    
     .gradient-text {
-      background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+      background: linear-gradient(135deg, #d4af37 0%, #f4e4ba 50%, #d4af37 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
-
-    .glass-effect {
-      background: rgba(255, 255, 255, 0.05);
+    
+    .glass-card {
+      background: rgba(255, 255, 255, 0.03);
       backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(212, 175, 55, 0.1);
     }
-
-    body.light-mode .glass-effect {
-      background: rgba(255, 255, 255, 0.8);
-      border: 1px solid rgba(0, 0, 0, 0.1);
+    
+    .skill-bar {
+      background: linear-gradient(90deg, #d4af37, #f4e4ba);
     }
-
-    .animate-fade-in {
-      animation: fadeIn 0.6s ease-in;
+    
+    .nav-link {
+      position: relative;
     }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .parallax-bg {
-      background-image: linear-gradient(to bottom right, rgba(15, 23, 42, 0.75), rgba(15, 23, 42, 0.9)), 
-        url('https://images.pexels.com/photos/460680/pexels-photo-460680.jpeg?auto=compress&cs=tinysrgb&w=1200');
-      background-position: center;
-      background-repeat: no-repeat;
-      background-size: cover;
-      background-attachment: scroll;
-    }
-
-    .destination-card {
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .destination-card:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-    }
-
-    /* Chatbot */
-    .chatbot-widget {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      z-index: 1000;
-    }
-
-    .chatbot-button {
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      box-shadow: 0 4px 20px rgba(59, 130, 246, 0.4);
-      transition: transform 0.3s ease;
-    }
-
-    .chatbot-button:hover {
-      transform: scale(1.1);
-    }
-
-    .chatbot-window {
+    
+    .nav-link::after {
+      content: '';
       position: absolute;
-      bottom: 80px;
-      right: 0;
-      width: 320px;
-      height: 420px;
-      background: var(--bg-secondary);
-      border-radius: 20px;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-      display: none;
-      flex-direction: column;
-      overflow: hidden;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(90deg, #d4af37, #f4e4ba);
+      transition: width 0.3s ease;
     }
-
-    .chatbot-window.active {
-      display: flex;
+    
+    .nav-link:hover::after {
+      width: 100%;
     }
-
-    .chat-messages {
-      flex: 1;
-      overflow-y: auto;
-      padding: 12px 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .chat-bubble {
-      max-width: 80%;
-      padding: 8px 12px;
-      border-radius: 12px;
-      font-size: 0.85rem;
-      line-height: 1.4;
-    }
-
-    .chat-bubble.user {
-      margin-left: auto;
-      background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-      color: #f9fafb;
-      border-bottom-right-radius: 2px;
-    }
-
-    .chat-bubble.bot {
-      margin-right: auto;
-      background: rgba(15, 23, 42, 0.85);
-      border-bottom-left-radius: 2px;
-    }
-
-    body.light-mode .chat-bubble.bot {
-      background: rgba(226, 232, 240, 0.95);
-      color: #0f172a;
-    }
-
-    .chat-input-wrapper {
-      border-top: 1px solid rgba(148, 163, 184, 0.4);
-      padding: 8px;
-      display: flex;
-      gap: 8px;
-      align-items: center;
-    }
-
-    .chat-input-wrapper input {
-      flex: 1;
-      border-radius: 999px;
-      border: none;
-      padding: 6px 12px;
-      font-size: 0.85rem;
-      outline: none;
-      background: rgba(15, 23, 42, 0.85);
-      color: #e5e7eb;
-    }
-
-    body.light-mode .chat-input-wrapper input {
-      background: #e5e7eb;
-      color: #111827;
-    }
-
-    .chat-input-wrapper button {
-      border-radius: 999px;
-      padding: 6px 12px;
-      font-size: 0.8rem;
-    }
-
-    /* Custom scrollbars (subtle) */
-    .chat-messages::-webkit-scrollbar {
-      width: 6px;
-    }
-    .chat-messages::-webkit-scrollbar-track {
-      background: transparent;
-    }
-    .chat-messages::-webkit-scrollbar-thumb {
-      background: rgba(148, 163, 184, 0.6);
-      border-radius: 999px;
+    
+    .section-divider {
+      background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.5), transparent);
+      height: 1px;
     }
   </style>
   <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
  </head>
- <body class="min-h-full flex flex-col">
-  <header class="w-full">
-   <nav class="w-full max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
-    <div class="flex items-center gap-2">
-     <div class="w-9 h-9 rounded-full flex items-center justify-center bg-gradient-to-tr from-blue-500 to-purple-500"><i class="fa-solid fa-city text-white text-lg" aria-hidden="true"></i>
+ <body class="h-full font-body bg-[#0a0a0f] text-gray-100 overflow-auto">
+  <div id="app-wrapper" class="w-full h-full overflow-auto"><!-- Header / Navigation -->
+   <header id="header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+    <div class="absolute inset-0 bg-[#0a0a0f]/80 backdrop-blur-md"></div>
+    <nav class="relative max-w-6xl mx-auto px-6 py-4">
+     <div class="flex items-center justify-between"><!-- Logo --> <a href="#home" class="flex items-center gap-3 group">
+       <div class="w-10 h-10 rounded-full bg-gradient-to-br from-[#d4af37] to-[#f4e4ba] flex items-center justify-center text-[#0a0a0f] font-display font-bold text-lg group-hover:scale-110 transition-transform duration-300">
+        S
+       </div>
+       <div><span id="nav-name" class="font-display text-lg font-semibold text-white">Syabil</span>
+        <p id="nav-tagline" class="text-xs text-gray-400">Pelajar &amp; Pembelajar</p>
+       </div></a> <!-- Desktop Navigation -->
+      <div class="hidden md:flex items-center gap-8"><a href="#home" class="nav-link text-sm font-medium text-gray-300 hover:text-[#d4af37] transition-colors">Beranda</a> <a href="#about" class="nav-link text-sm font-medium text-gray-300 hover:text-[#d4af37] transition-colors">Tentang</a> <a href="#skills" class="nav-link text-sm font-medium text-gray-300 hover:text-[#d4af37] transition-colors">Keahlian</a> <a href="#achievement" class="nav-link text-sm font-medium text-gray-300 hover:text-[#d4af37] transition-colors">Prestasi</a> <a href="#contact" class="px-5 py-2 bg-gradient-to-r from-[#d4af37] to-[#c9a227] text-[#0a0a0f] text-sm font-semibold rounded-full hover:shadow-lg hover:shadow-[#d4af37]/30 transition-all duration-300 hover:scale-105">Kontak</a>
+      </div><!-- Mobile Menu Button --> <button id="mobile-menu-btn" class="md:hidden w-10 h-10 flex flex-col items-center justify-center gap-1.5 group"> <span class="w-6 h-0.5 bg-gray-300 group-hover:bg-[#d4af37] transition-all duration-300 origin-center" id="menu-line-1"></span> <span class="w-6 h-0.5 bg-gray-300 group-hover:bg-[#d4af37] transition-all duration-300" id="menu-line-2"></span> <span class="w-6 h-0.5 bg-gray-300 group-hover:bg-[#d4af37] transition-all duration-300 origin-center" id="menu-line-3"></span> </button>
+     </div><!-- Mobile Navigation -->
+     <div id="mobile-menu" class="md:hidden hidden absolute top-full left-0 right-0 bg-[#0a0a0f]/95 backdrop-blur-md border-t border-[#d4af37]/10">
+      <div class="flex flex-col p-6 gap-4"><a href="#home" class="text-gray-300 hover:text-[#d4af37] transition-colors py-2">Beranda</a> <a href="#about" class="text-gray-300 hover:text-[#d4af37] transition-colors py-2">Tentang</a> <a href="#skills" class="text-gray-300 hover:text-[#d4af37] transition-colors py-2">Keahlian</a> <a href="#achievement" class="text-gray-300 hover:text-[#d4af37] transition-colors py-2">Prestasi</a> <a href="#contact" class="text-gray-300 hover:text-[#d4af37] transition-colors py-2">Kontak</a>
+      </div>
      </div>
-     <div>
-      <p class="text-xs uppercase tracking-[0.2em] text-slate-400">Discover</p>
-      <p class="text-sm font-semibold">Budapest Travel</p>
-     </div>
+    </nav>
+   </header><!-- Hero Section / Beranda -->
+   <section id="home" class="min-h-screen flex items-center justify-center relative overflow-hidden pt-20"><!-- Background Elements -->
+    <div class="absolute inset-0 overflow-hidden">
+     <div class="absolute top-20 left-10 w-72 h-72 bg-[#d4af37]/5 rounded-full blur-3xl"></div>
+     <div class="absolute bottom-20 right-10 w-96 h-96 bg-[#d4af37]/5 rounded-full blur-3xl"></div>
+     <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] border border-[#d4af37]/5 rounded-full"></div>
+     <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] border border-[#d4af37]/5 rounded-full"></div>
     </div>
-    <div class="hidden md:flex items-center gap-6 text-sm"><a href="#destinasi" class="hover:text-blue-400 transition-colors">Destinasi</a> <a href="#pengalaman" class="hover:text-blue-400 transition-colors">Pengalaman</a> <a href="#tips" class="hover:text-blue-400 transition-colors">Tips</a>
-    </div>
-    <div class="flex items-center gap-2"><button id="themeToggle" class="glass-effect text-xs px-3 py-2 rounded-full flex items-center gap-2 hover:bg-slate-800/40 transition-colors"> <i class="fa-solid fa-moon text-yellow-300" aria-hidden="true"></i> <span>Mode Malam</span> </button>
-    </div>
-   </nav>
-  </header>
-  <main class="flex-1 w-full"><!-- HERO -->
-   <section class="parallax-bg">
-    <div class="w-full max-w-6xl mx-auto px-4 pt-10 pb-16 md:pt-16 md:pb-20 flex flex-col md:flex-row gap-10 items-center"><!-- Left -->
-     <div class="md:w-1/2 space-y-6 animate-fade-in">
-      <h1 class="text-3xl md:text-5xl font-bold leading-tight">Jelajahi <span class="gradient-text">Keajaiban Budapest</span></h1>
-      <p class="text-sm md:text-base text-slate-300 max-w-md">Kota yang dipenuhi jembatan ikonik, pemandian air panas bersejarah, dan arsitektur menawan di tepi Sungai Danube. Temukan sisi romantis dan klasik Eropa Timur dalam satu perjalanan tak terlupakan.</p>
-      <div class="flex flex-wrap gap-3"><button class="px-4 py-2.5 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 text-xs md:text-sm font-semibold shadow-lg shadow-blue-500/40 hover:shadow-blue-500/60 transition-transform transform hover:-translate-y-0.5"> Rencanakan Perjalananmu </button> <button class="px-4 py-2.5 rounded-full glass-effect text-xs md:text-sm hover:bg-slate-800/40 transition-colors"> Lihat Paket Wisata </button>
-      </div>
-      <div class="grid grid-cols-3 gap-4 text-xs md:text-sm">
-       <div class="glass-effect rounded-2xl px-4 py-3">
-        <p class="font-semibold text-lg md:text-xl">+120K</p>
-        <p class="text-slate-300 text-[0.72rem] md:text-xs">Wisatawan per tahun</p>
+    <div class="relative z-10 max-w-6xl mx-auto px-6 py-20">
+     <div class="flex flex-col lg:flex-row items-center gap-12 lg:gap-20"><!-- Text Content -->
+      <div class="flex-1 text-center lg:text-left">
+       <p id="hero-greeting" class="text-[#d4af37] text-sm font-medium tracking-widest uppercase mb-4 animate-fade-in-up opacity-0">Selamat Datang</p>
+       <h1 class="font-display text-4xl md:text-5xl lg:text-6xl font-bold mb-6 animate-fade-in-up opacity-0 animate-delay-100">Saya <span id="hero-name" class="gradient-text">Syabil Jafa Nararya</span></h1>
+       <p class="text-xl md:text-2xl text-gray-400 mb-4 animate-fade-in-up opacity-0 animate-delay-200"><span id="hero-role" class="text-[#d4af37]">Cepat Belajar</span> • Pelajar SMA</p>
+       <p class="text-gray-400 max-w-lg mx-auto lg:mx-0 mb-8 animate-fade-in-up opacity-0 animate-delay-300">Seorang pelajar yang bersemangat dalam mengejar ilmu pengetahuan dan bermimpi untuk meraih masa depan gemilang.</p>
+       <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start animate-fade-in-up opacity-0 animate-delay-400"><a href="#about" class="px-8 py-3 bg-gradient-to-r from-[#d4af37] to-[#c9a227] text-[#0a0a0f] font-semibold rounded-full hover:shadow-lg hover:shadow-[#d4af37]/30 transition-all duration-300 hover:scale-105"> Tentang Saya </a> <a href="#contact" class="px-8 py-3 border border-[#d4af37]/50 text-[#d4af37] font-semibold rounded-full hover:bg-[#d4af37]/10 transition-all duration-300"> Hubungi Saya </a>
        </div>
-       <div class="glass-effect rounded-2xl px-4 py-3">
-        <p class="font-semibold text-lg md:text-xl">4.9/5</p>
-        <p class="text-slate-300 text-[0.72rem] md:text-xs">Rating pengalaman</p>
-       </div>
-       <div class="glass-effect rounded-2xl px-4 py-3">
-        <p class="font-semibold text-lg md:text-xl">365</p>
-        <p class="text-slate-300 text-[0.72rem] md:text-xs">Hari penuh pesona</p>
-       </div>
-      </div>
-     </div><!-- Right - card grid -->
-     <div class="md:w-1/2 w-full grid grid-cols-2 gap-4">
-      <div class="destination-card glass-effect rounded-3xl p-4 flex flex-col gap-3">
-       <div class="w-full h-28 md:h-36 rounded-2xl overflow-hidden"><img src="https://images.unsplash.com/photo-1541849546-216549ae216d?w=600&amp;q=80" alt="Pemandangan Sungai Danube dan jembatan Chain Bridge di malam hari" class="w-full h-full object-cover" onerror="this.src=''; this.alt='Gambar tidak dapat dimuat'; this.style.display='none';">
-       </div>
-       <div>
-        <h3 class="font-semibold text-sm md:text-base">Sungai Danube</h3>
-        <p class="text-[0.7rem] md:text-xs text-slate-300 mt-1">Menyusuri sungai dengan kapal pesiar malam memberi pemandangan kota yang berkilau.</p>
-       </div>
-       <div class="flex items-center justify-between text-[0.7rem] md:text-xs"><span class="flex items-center gap-2 text-slate-300"> <i class="fa-solid fa-clock text-blue-400 text-xs" aria-hidden="true"></i> 2–3 jam </span> <span class="text-blue-400 font-medium">Tur populer</span>
-       </div>
-      </div>
-      <div class="destination-card glass-effect rounded-3xl p-4 flex flex-col gap-3">
-       <div class="w-full h-28 md:h-36 rounded-2xl overflow-hidden"><img src="https://images.unsplash.com/photo-1555854877-bab0e564b8d5?w=600&amp;q=80" alt="Pemandian air panas Széchenyi yang ikonik dan selalu hidup" class="w-full h-full object-cover" onerror="this.src=''; this.alt='Gambar tidak dapat dimuat'; this.style.display='none';">
-       </div>
-       <div>
-        <h3 class="font-semibold text-sm md:text-base">Pemandian Széchenyi</h3>
-        <p class="text-[0.7rem] md:text-xs text-slate-300 mt-1">Nikmati spa termal outdoor, kolam hangat, dan suasana relaksasi ala Eropa klasik.</p>
-       </div>
-       <div class="flex items-center justify-between text-[0.7rem] md:text-xs"><span class="flex items-center gap-2 text-slate-300"> <i class="fa-solid fa-spa text-purple-400 text-xs" aria-hidden="true"></i> Seharian </span> <span class="text-purple-300 font-medium">Wajib coba</span>
-       </div>
-      </div>
-      <div class="destination-card glass-effect rounded-3xl p-4 flex flex-col gap-3 col-span-2">
-       <div class="w-full h-28 md:h-40 rounded-2xl overflow-hidden"><img src="https://images.unsplash.com/photo-1467269204594-9661b134dd2b?w=800&amp;q=80" alt="Panorama Kastil Buda dan Parliament Building dari Fisherman's Bastion" class="w-full h-full object-cover" onerror="this.src=''; this.alt='Gambar tidak dapat dimuat'; this.style.display='none';">
-       </div>
-       <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
-        <div>
-         <h3 class="font-semibold text-sm md:text-base">Fisherman's Bastion</h3>
-         <p class="text-[0.7rem] md:text-xs text-slate-300 mt-1">Spot foto terbaik di Budapest dengan lengkungan putih klasik dan pemandangan kota.</p>
+      </div><!-- Illustration -->
+      <div class="flex-1 flex justify-center animate-fade-in-up opacity-0 animate-delay-500">
+       <div class="relative"><!-- Decorative Ring -->
+        <div class="absolute inset-0 -m-8 border-2 border-dashed border-[#d4af37]/20 rounded-full animate-spin" style="animation-duration: 30s;"></div><!-- Profile Illustration -->
+        <div class="w-64 h-64 md:w-80 md:h-80 rounded-full bg-gradient-to-br from-[#1a1a2e] to-[#0f0f1a] border-2 border-[#d4af37]/30 flex items-center justify-center animate-float overflow-hidden relative"><!-- Student SVG Illustration -->
+         <svg viewbox="0 0 200 200" class="w-48 h-48 md:w-60 md:h-60"><!-- Background Circle --> <circle cx="100" cy="100" r="90" fill="url(#grad1)" opacity="0.3" /> <!-- Body --> <ellipse cx="100" cy="175" rx="45" ry="25" fill="#1e3a5f" /> <!-- Shirt --> <path d="M60 145 Q100 130 140 145 L145 175 Q100 185 55 175 Z" fill="#ffffff" /> <path d="M100 130 L100 150" stroke="#d4af37" stroke-width="3" /> <!-- Neck --> <rect x="90" y="115" width="20" height="20" rx="5" fill="#e8d4b8" /> <!-- Head --> <ellipse cx="100" cy="85" rx="35" ry="40" fill="#e8d4b8" /> <!-- Hair --> <ellipse cx="100" cy="55" rx="38" ry="25" fill="#1a1a2e" /> <path d="M62 70 Q65 50 100 45 Q135 50 138 70" fill="#1a1a2e" /> <!-- Eyes --> <ellipse cx="85" cy="85" rx="6" ry="4" fill="#1a1a2e" /> <ellipse cx="115" cy="85" rx="6" ry="4" fill="#1a1a2e" /> <circle cx="87" cy="84" r="1.5" fill="#ffffff" /> <circle cx="117" cy="84" r="1.5" fill="#ffffff" /> <!-- Eyebrows --> <path d="M77 77 Q85 74 93 77" stroke="#1a1a2e" stroke-width="2" fill="none" /> <path d="M107 77 Q115 74 123 77" stroke="#1a1a2e" stroke-width="2" fill="none" /> <!-- Nose --> <path d="M100 85 Q103 95 100 100" stroke="#d4a574" stroke-width="2" fill="none" /> <!-- Smile --> <path d="M88 108 Q100 118 112 108" stroke="#c9847a" stroke-width="2.5" fill="none" stroke-linecap="round" /> <!-- Glasses --> <circle cx="85" cy="85" r="12" stroke="#d4af37" stroke-width="2" fill="none" /> <circle cx="115" cy="85" r="12" stroke="#d4af37" stroke-width="2" fill="none" /> <path d="M97 85 L103 85" stroke="#d4af37" stroke-width="2" /> <path d="M73 83 L65 78" stroke="#d4af37" stroke-width="2" /> <path d="M127 83 L135 78" stroke="#d4af37" stroke-width="2" /> <!-- Book --> <rect x="140" y="140" width="30" height="40" rx="2" fill="#d4af37" transform="rotate(15 155 160)" /> <rect x="142" y="142" width="26" height="36" rx="1" fill="#f4e4ba" transform="rotate(15 155 160)" /> <line x1="148" y1="152" x2="165" y2="148" stroke="#1a1a2e" stroke-width="1" opacity="0.5" /> <line x1="148" y1="158" x2="165" y2="154" stroke="#1a1a2e" stroke-width="1" opacity="0.5" /> <line x1="148" y1="164" x2="160" y2="161" stroke="#1a1a2e" stroke-width="1" opacity="0.5" /> <defs>
+           <radialgradient id="grad1" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#d4af37" stop-opacity="0.3" />
+            <stop offset="100%" stop-color="#d4af37" stop-opacity="0" />
+           </radialgradient>
+          </defs>
+         </svg>
+        </div><!-- Floating Elements -->
+        <div class="absolute -top-4 -right-4 w-12 h-12 bg-gradient-to-br from-[#d4af37] to-[#f4e4ba] rounded-lg flex items-center justify-center text-[#0a0a0f] shadow-lg" style="animation: float 4s ease-in-out infinite;">
+         📚
         </div>
-        <div class="space-y-1 text-[0.7rem] md:text-xs">
-         <p class="flex items-center gap-2"><i class="fa-solid fa-camera text-blue-300 text-xs" aria-hidden="true"></i> <span>Golden hour paling cantik</span></p>
-         <p class="flex items-center gap-2"><i class="fa-solid fa-mountain-city text-indigo-300 text-xs" aria-hidden="true"></i> <span>Lokasi di Bukit Buda</span></p>
+        <div class="absolute -bottom-4 -left-4 w-12 h-12 bg-gradient-to-br from-[#d4af37] to-[#f4e4ba] rounded-lg flex items-center justify-center text-[#0a0a0f] shadow-lg" style="animation: float 5s ease-in-out infinite 1s;">
+         ♟️
+        </div>
+        <div class="absolute top-1/2 -right-8 w-10 h-10 bg-gradient-to-br from-[#d4af37] to-[#f4e4ba] rounded-full flex items-center justify-center text-[#0a0a0f] shadow-lg" style="animation: float 4.5s ease-in-out infinite 0.5s;">
+         ⚛️
         </div>
        </div>
+      </div>
+     </div><!-- Scroll Indicator -->
+     <div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-50 hover:opacity-100 transition-opacity"><span class="text-xs text-gray-400">Scroll</span>
+      <div class="w-6 h-10 border-2 border-gray-400 rounded-full flex justify-center pt-2">
+       <div class="w-1 h-2 bg-[#d4af37] rounded-full animate-bounce"></div>
       </div>
      </div>
     </div>
-   </section><!-- Destinasi -->
-   <section id="destinasi" class="w-full">
-    <div class="w-full max-w-6xl mx-auto px-4 py-10 md:py-14">
-     <h2 class="text-xl md:text-2xl font-semibold mb-2">Destinasi Ikonik Budapest</h2>
-     <p class="text-xs md:text-sm text-slate-300 max-w-2xl mb-6">Dari kastil bersejarah hingga kafe tepi sungai, Budapest menawarkan kombinasi sempurna antara budaya, sejarah, dan hiburan modern.</p>
-     <div class="grid gap-4 md:grid-cols-3">
-      <article class="glass-effect rounded-2xl p-4 destination-card">
-       <h3 class="font-semibold text-sm md:text-base mb-2">Hungarian Parliament Building</h3>
-       <p class="text-[0.72rem] md:text-xs text-slate-300 mb-3">Gedung parlemen megah dengan arsitektur neo-gotik di tepi Danube, salah satu ikon Budapest paling terkenal.</p>
-       <ul class="space-y-1 text-[0.72rem] md:text-xs text-slate-300">
-        <li class="flex gap-2"><span class="text-blue-400"><i class="fa-solid fa-circle-check text-[0.6rem]" aria-hidden="true"></i></span> Tur dalam ruangan tersedia</li>
-        <li class="flex gap-2"><span class="text-blue-400"><i class="fa-solid fa-circle-check text-[0.6rem]" aria-hidden="true"></i></span> Pemandangan terbaik dari sisi Buda</li>
-       </ul>
-      </article>
-      <article class="glass-effect rounded-2xl p-4 destination-card">
-       <h3 class="font-semibold text-sm md:text-base mb-2">Buda Castle</h3>
-       <p class="text-[0.72rem] md:text-xs text-slate-300 mb-3">Kompleks istana yang memayungi museum, galeri seni, dan pemandangan kota yang spektakuler.</p>
-       <ul class="space-y-1 text-[0.72rem] md:text-xs text-slate-300">
-        <li class="flex gap-2"><span class="text-blue-400"><i class="fa-solid fa-circle-check text-[0.6rem]" aria-hidden="true"></i></span> Naik funicular ke puncak</li>
-        <li class="flex gap-2"><span class="text-blue-400"><i class="fa-solid fa-circle-check text-[0.6rem]" aria-hidden="true"></i></span> Cahaya malam yang dramatis</li>
-       </ul>
-      </article>
-      <article class="glass-effect rounded-2xl p-4 destination-card">
-       <h3 class="font-semibold text-sm md:text-base mb-2">Andrássy Avenue</h3>
-       <p class="text-[0.72rem] md:text-xs text-slate-300 mb-3">Jalan boulevard elegan dengan butik, kafe, dan gedung opera yang memesona.</p>
-       <ul class="space-y-1 text-[0.72rem] md:text-xs text-slate-300">
-        <li class="flex gap-2"><span class="text-blue-400"><i class="fa-solid fa-circle-check text-[0.6rem]" aria-hidden="true"></i></span> Cocok untuk walking tour</li>
-        <li class="flex gap-2"><span class="text-blue-400"><i class="fa-solid fa-circle-check text-[0.6rem]" aria-hidden="true"></i></span> Dekat dengan Heroes' Square</li>
-       </ul>
-      </article>
+   </section><!-- Section Divider -->
+   <div class="section-divider max-w-4xl mx-auto"></div><!-- About Section -->
+   <section id="about" class="py-24 relative">
+    <div class="max-w-6xl mx-auto px-6"><!-- Section Header -->
+     <div class="text-center mb-16">
+      <p class="text-[#d4af37] text-sm font-medium tracking-widest uppercase mb-4">Kenali Saya</p>
+      <h2 class="font-display text-3xl md:text-4xl font-bold">Tentang <span class="gradient-text">Saya</span></h2>
      </div>
-    </div>
-   </section><!-- Pengalaman & Tips -->
-   <section id="pengalaman" class="w-full">
-    <div class="w-full max-w-6xl mx-auto px-4 pb-12 md:pb-16 grid md:grid-cols-[1.4fr,1fr] gap-8"><!-- Pengalaman -->
-     <div class="space-y-4">
-      <h2 class="text-xl md:text-2xl font-semibold">Pengalaman Wajib di Budapest</h2>
-      <div class="space-y-3 text-xs md:text-sm text-slate-300">
-       <p>Rasakan suasana malam di tepi Sungai Danube dengan lampu kota yang berkilau, lalu akhiri hari dengan berendam di pemandian air panas. Di pagi hari, jelajahi kafe-kafe tersembunyi di gang-gang tua dan nikmati kue khas Hungaria, <span class="font-semibold text-sky-300">kürtőskalács</span>.</p>
-       <p>Budapest juga dikenal dengan <span class="font-semibold text-sky-300">ruin bars</span> — bar unik yang dibangun di dalam gedung tua dengan dekorasi eklektik dan suasana yang sangat hidup.</p>
-      </div>
-      <div class="grid grid-cols-2 gap-3 text-[0.72rem] md:text-xs">
-       <div class="glass-effect rounded-2xl p-3 flex gap-3 items-start">
-        <div class="w-7 h-7 rounded-full flex items-center justify-center bg-gradient-to-tr from-blue-500 to-cyan-400 text-xs"><i class="fa-solid fa-train-subway" aria-hidden="true"></i>
-        </div>
-        <div>
-         <p class="font-semibold mb-0.5">Transportasi Mudah</p>
-         <p class="text-slate-300">Metro, tram, dan bus terhubung baik, memudahkanmu menjelajah setiap sudut kota.</p>
+     <div class="grid lg:grid-cols-2 gap-12 items-center"><!-- About Image -->
+      <div class="relative">
+       <div class="glass-card rounded-2xl p-8 relative overflow-hidden"><!-- Decorative -->
+        <div class="absolute top-0 right-0 w-32 h-32 bg-[#d4af37]/10 rounded-full blur-2xl"></div>
+        <div class="relative z-10"><!-- Quote -->
+         <div class="text-6xl text-[#d4af37]/20 font-display absolute -top-4 -left-2">
+          "
+         </div>
+         <blockquote class="text-lg text-gray-300 italic pl-8 mb-6">
+          Pendidikan adalah senjata paling ampuh yang bisa Anda gunakan untuk mengubah dunia.
+         </blockquote>
+         <p class="text-sm text-[#d4af37] text-right">— Nelson Mandela</p>
+        </div><!-- Stats -->
+        <div class="grid grid-cols-3 gap-4 mt-8 pt-8 border-t border-[#d4af37]/10">
+         <div class="text-center">
+          <p class="text-2xl font-bold text-[#d4af37]">XII</p>
+          <p class="text-xs text-gray-400">Kelas</p>
+         </div>
+         <div class="text-center">
+          <p class="text-2xl font-bold text-[#d4af37]">MIPA</p>
+          <p class="text-xs text-gray-400">Jurusan</p>
+         </div>
+         <div class="text-center">
+          <p class="text-2xl font-bold text-[#d4af37]">ITB</p>
+          <p class="text-xs text-gray-400">Target</p>
+         </div>
         </div>
        </div>
-       <div class="glass-effect rounded-2xl p-3 flex gap-3 items-start">
-        <div class="w-7 h-7 rounded-full flex items-center justify-center bg-gradient-to-tr from-purple-500 to-pink-400 text-xs"><i class="fa-solid fa-utensils" aria-hidden="true"></i>
+      </div><!-- About Content -->
+      <div class="space-y-6">
+       <div class="glass-card rounded-xl p-6 hover:border-[#d4af37]/30 transition-all duration-300">
+        <div class="flex items-start gap-4">
+         <div class="w-12 h-12 bg-[#d4af37]/10 rounded-lg flex items-center justify-center text-2xl flex-shrink-0">
+          🎓
+         </div>
+         <div>
+          <h3 class="font-semibold text-lg mb-2">Latar Belakang</h3>
+          <p id="about-school" class="text-gray-400">Pelajar SMAN 1 SUBANG yang bersemangat dalam menuntut ilmu dan mengembangkan diri.</p>
+         </div>
         </div>
-        <div>
-         <p class="font-semibold mb-0.5">Kuliner Lezat</p>
-         <p class="text-slate-300">Cicipi goulash hangat, chimney cake manis, dan kopi ala Budapest.</p>
+       </div>
+       <div class="glass-card rounded-xl p-6 hover:border-[#d4af37]/30 transition-all duration-300">
+        <div class="flex items-start gap-4">
+         <div class="w-12 h-12 bg-[#d4af37]/10 rounded-lg flex items-center justify-center text-2xl flex-shrink-0">
+          🎯
+         </div>
+         <div>
+          <h3 class="font-semibold text-lg mb-2">Minat &amp; Tujuan</h3>
+          <p class="text-gray-400">Memiliki ketertarikan mendalam pada <span id="about-interest" class="text-[#d4af37]">Fisika</span> dengan tujuan <span id="about-goal" class="text-[#d4af37]">Meraih ITB</span>.</p>
+         </div>
+        </div>
+       </div>
+       <div class="glass-card rounded-xl p-6 hover:border-[#d4af37]/30 transition-all duration-300">
+        <div class="flex items-start gap-4">
+         <div class="w-12 h-12 bg-[#d4af37]/10 rounded-lg flex items-center justify-center text-2xl flex-shrink-0">
+          📖
+         </div>
+         <div>
+          <h3 class="font-semibold text-lg mb-2">Pengalaman</h3>
+          <p class="text-gray-400">Selama saya sekolah, saya sudah belajar banyak hal yang membentuk karakter dan kemampuan saya.</p>
+         </div>
+        </div>
+       </div>
+       <div class="glass-card rounded-xl p-6 hover:border-[#d4af37]/30 transition-all duration-300">
+        <div class="flex items-start gap-4">
+         <div class="w-12 h-12 bg-[#d4af37]/10 rounded-lg flex items-center justify-center text-2xl flex-shrink-0">
+          ⭐
+         </div>
+         <div>
+          <h3 class="font-semibold text-lg mb-2">Nilai &amp; Keunggulan</h3>
+          <p class="text-gray-400">Belajar mandiri, berkarakter dan pribadi yang baik. Selalu berusaha menjadi versi terbaik dari diri sendiri.</p>
+         </div>
         </div>
        </div>
       </div>
-     </div><!-- Tips -->
-     <aside id="tips" class="glass-effect rounded-2xl p-4 md:p-5 h-fit">
-      <h2 class="text-base md:text-lg font-semibold mb-3">Tips Singkat untuk Traveler</h2>
-      <ul class="space-y-2 text-[0.72rem] md:text-xs text-slate-200">
-       <li class="flex gap-2"><span class="text-blue-400 mt-0.5"><i class="fa-solid fa-location-dot text-[0.65rem]" aria-hidden="true"></i></span>
-        <div>
-         <p class="font-medium">Musim terbaik</p>
-         <p class="text-slate-300">Musim semi (Apr–Jun) &amp; gugur (Sep–Okt) dengan cuaca sejuk dan langit cerah.</p>
-        </div></li>
-       <li class="flex gap-2"><span class="text-blue-400 mt-0.5"><i class="fa-solid fa-ticket text-[0.65rem]" aria-hidden="true"></i></span>
-        <div>
-         <p class="font-medium">Budapest Card</p>
-         <p class="text-slate-300">Kartu wisata yang memberikan akses transportasi umum dan diskon masuk atraksi.</p>
-        </div></li>
-       <li class="flex gap-2"><span class="text-blue-400 mt-0.5"><i class="fa-solid fa-language text-[0.65rem]" aria-hidden="true"></i></span>
-        <div>
-         <p class="font-medium">Bahasa &amp; mata uang</p>
-         <p class="text-slate-300">Bahasa Hungaria, mata uang Forint (HUF). Bahasa Inggris cukup umum di area wisata.</p>
-        </div></li>
-       <li class="flex gap-2"><span class="text-blue-400 mt-0.5"><i class="fa-solid fa-temperature-half text-[0.65rem]" aria-hidden="true"></i></span>
-        <div>
-         <p class="font-medium">Cuaca</p>
-         <p class="text-slate-300">Musim dingin bisa sangat dingin, siapkan pakaian hangat jika datang Des–Feb.</p>
-        </div></li>
-      </ul>
-     </aside>
-    </div>
-   </section>
-  </main>
-  <footer class="w-full border-t border-slate-800/80">
-   <div class="w-full max-w-6xl mx-auto px-4 py-4 flex flex-col md:flex-row items-center justify-between gap-3 text-[0.72rem] md:text-xs text-slate-400">
-    <p>© 2025 Budapest Travel Guide. Inspirasi perjalananmu ke Eropa Tengah.</p>
-    <p>Desain interaktif oleh Canva Code.</p>
-   </div>
-  </footer><!-- Chatbot -->
-  <div class="chatbot-widget" aria-label="Asisten perjalanan Budapest">
-   <div class="chatbot-window glass-effect" id="chatbotWindow" role="dialog" aria-modal="false" aria-labelledby="chatbotTitle">
-    <div class="flex items-center justify-between px-4 py-3 border-b border-slate-700/70">
-     <div>
-      <p id="chatbotTitle" class="text-sm font-semibold">Asisten Budapest</p>
-      <p class="text-[0.7rem] text-slate-400">Tanya apa saja tentang perjalananmu</p>
-     </div><button id="chatbotClose" class="text-slate-400 hover:text-slate-200 text-xs" aria-label="Tutup chatbot"> <i class="fa-solid fa-xmark" aria-hidden="true"></i> </button>
-    </div>
-    <div class="chat-messages" id="chatMessages" aria-live="polite">
-     <div class="chat-bubble bot">
-      Hai! Aku bisa bantu kasih rekomendasi destinasi, waktu kunjungan terbaik, atau tips traveling di Budapest. Apa yang ingin kamu tahu?
      </div>
     </div>
-    <form class="chat-input-wrapper" id="chatForm"><label for="chatInput" class="sr-only">Tulis pertanyaanmu</label> <input id="chatInput" type="text" autocomplete="off" placeholder="Tanya: tempat terbaik, cuaca, budget..."> <button type="submit" class="bg-gradient-to-r from-blue-500 to-purple-500 text-white text-xs font-semibold px-3 py-1.5 hover:opacity-90"> Kirim </button>
-    </form>
-   </div><button class="chatbot-button" id="chatbotToggle" aria-label="Buka chatbot asisten Budapest"> <i class="fa-solid fa-comments text-white text-xl" aria-hidden="true"></i> </button>
+   </section><!-- Section Divider -->
+   <div class="section-divider max-w-4xl mx-auto"></div><!-- Skills Section -->
+   <section id="skills" class="py-24 relative">
+    <div class="max-w-6xl mx-auto px-6"><!-- Section Header -->
+     <div class="text-center mb-16">
+      <p class="text-[#d4af37] text-sm font-medium tracking-widest uppercase mb-4">Kemampuan</p>
+      <h2 class="font-display text-3xl md:text-4xl font-bold">Keahlian <span class="gradient-text">Saya</span></h2>
+     </div>
+     <div class="grid md:grid-cols-2 gap-8"><!-- Hard Skills -->
+      <div class="glass-card rounded-2xl p-8">
+       <div class="flex items-center gap-3 mb-8">
+        <div class="w-10 h-10 bg-[#d4af37]/10 rounded-lg flex items-center justify-center text-xl">
+         🛠️
+        </div>
+        <h3 class="font-display text-xl font-semibold">Hard Skills</h3>
+       </div>
+       <div class="space-y-6">
+        <div class="group">
+         <div class="flex justify-between items-center mb-2"><span class="text-gray-300 group-hover:text-[#d4af37] transition-colors">Bermain Catur</span> <span class="text-sm text-[#d4af37]">85%</span>
+         </div>
+         <div class="h-2 bg-[#1a1a2e] rounded-full overflow-hidden">
+          <div class="skill-bar h-full rounded-full transition-all duration-500" style="width: 85%"></div>
+         </div>
+        </div>
+        <div class="group">
+         <div class="flex justify-between items-center mb-2"><span class="text-gray-300 group-hover:text-[#d4af37] transition-colors">Fisika</span> <span class="text-sm text-[#d4af37]">90%</span>
+         </div>
+         <div class="h-2 bg-[#1a1a2e] rounded-full overflow-hidden">
+          <div class="skill-bar h-full rounded-full transition-all duration-500" style="width: 90%"></div>
+         </div>
+        </div>
+        <div class="group">
+         <div class="flex justify-between items-center mb-2"><span class="text-gray-300 group-hover:text-[#d4af37] transition-colors">Matematika</span> <span class="text-sm text-[#d4af37]">88%</span>
+         </div>
+         <div class="h-2 bg-[#1a1a2e] rounded-full overflow-hidden">
+          <div class="skill-bar h-full rounded-full transition-all duration-500" style="width: 88%"></div>
+         </div>
+        </div>
+        <div class="group">
+         <div class="flex justify-between items-center mb-2"><span class="text-gray-300 group-hover:text-[#d4af37] transition-colors">Problem Solving</span> <span class="text-sm text-[#d4af37]">82%</span>
+         </div>
+         <div class="h-2 bg-[#1a1a2e] rounded-full overflow-hidden">
+          <div class="skill-bar h-full rounded-full transition-all duration-500" style="width: 82%"></div>
+         </div>
+        </div>
+       </div>
+      </div><!-- Soft Skills -->
+      <div class="glass-card rounded-2xl p-8">
+       <div class="flex items-center gap-3 mb-8">
+        <div class="w-10 h-10 bg-[#d4af37]/10 rounded-lg flex items-center justify-center text-xl">
+         💡
+        </div>
+        <h3 class="font-display text-xl font-semibold">Soft Skills</h3>
+       </div>
+       <div class="grid grid-cols-2 gap-4">
+        <div class="glass-card rounded-xl p-4 text-center hover:border-[#d4af37]/30 transition-all duration-300 hover:scale-105">
+         <div class="text-3xl mb-2">
+          🎨
+         </div>
+         <p class="text-sm font-medium">Kreatif</p>
+        </div>
+        <div class="glass-card rounded-xl p-4 text-center hover:border-[#d4af37]/30 transition-all duration-300 hover:scale-105">
+         <div class="text-3xl mb-2">
+          📚
+         </div>
+         <p class="text-sm font-medium">Belajar Mandiri</p>
+        </div>
+        <div class="glass-card rounded-xl p-4 text-center hover:border-[#d4af37]/30 transition-all duration-300 hover:scale-105">
+         <div class="text-3xl mb-2">
+          🤝
+         </div>
+         <p class="text-sm font-medium">Kerja Tim</p>
+        </div>
+        <div class="glass-card rounded-xl p-4 text-center hover:border-[#d4af37]/30 transition-all duration-300 hover:scale-105">
+         <div class="text-3xl mb-2">
+          ⏰
+         </div>
+         <p class="text-sm font-medium">Manajemen Waktu</p>
+        </div>
+        <div class="glass-card rounded-xl p-4 text-center hover:border-[#d4af37]/30 transition-all duration-300 hover:scale-105">
+         <div class="text-3xl mb-2">
+          💬
+         </div>
+         <p class="text-sm font-medium">Komunikasi</p>
+        </div>
+        <div class="glass-card rounded-xl p-4 text-center hover:border-[#d4af37]/30 transition-all duration-300 hover:scale-105">
+         <div class="text-3xl mb-2">
+          🎯
+         </div>
+         <p class="text-sm font-medium">Fokus</p>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- Section Divider -->
+   <div class="section-divider max-w-4xl mx-auto"></div><!-- Achievement Section -->
+   <section id="achievement" class="py-24 relative">
+    <div class="max-w-6xl mx-auto px-6"><!-- Section Header -->
+     <div class="text-center mb-16">
+      <p class="text-[#d4af37] text-sm font-medium tracking-widest uppercase mb-4">Pencapaian</p>
+      <h2 class="font-display text-3xl md:text-4xl font-bold">Prestasi <span class="gradient-text">Saya</span></h2>
+     </div>
+     <div class="max-w-3xl mx-auto"><!-- Achievement Card -->
+      <div class="glass-card rounded-2xl p-8 relative overflow-hidden group hover:border-[#d4af37]/30 transition-all duration-500"><!-- Glow Effect -->
+       <div class="absolute inset-0 bg-gradient-to-r from-[#d4af37]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+       <div class="relative z-10 flex flex-col md:flex-row items-center gap-6"><!-- Medal Icon -->
+        <div class="w-24 h-24 bg-gradient-to-br from-[#d4af37] to-[#f4e4ba] rounded-2xl flex items-center justify-center text-5xl shadow-lg flex-shrink-0">
+         🏅
+        </div>
+        <div class="text-center md:text-left">
+         <div class="flex items-center gap-2 justify-center md:justify-start mb-2"><span class="px-3 py-1 bg-[#d4af37]/10 text-[#d4af37] text-xs font-medium rounded-full">Sertifikat</span> <span class="px-3 py-1 bg-[#d4af37]/10 text-[#d4af37] text-xs font-medium rounded-full">OSN</span>
+         </div>
+         <h3 class="font-display text-xl font-semibold mb-2">Peserta OSN Fisika Tingkat Kabupaten</h3>
+         <p class="text-gray-400">Berpartisipasi dalam Olimpiade Sains Nasional bidang Fisika di tingkat Kabupaten Subang.</p><!-- Details -->
+         <div class="flex flex-wrap gap-4 mt-4 justify-center md:justify-start">
+          <div class="flex items-center gap-2 text-sm text-gray-400">
+           <svg class="w-4 h-4 text-[#d4af37]" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+           </svg><span>2025</span>
+          </div>
+          <div class="flex items-center gap-2 text-sm text-gray-400">
+           <svg class="w-4 h-4 text-[#d4af37]" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+           </svg><span>Kabupaten Subang</span>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div><!-- More Achievements Placeholder -->
+      <div class="text-center mt-8">
+       <p class="text-gray-400 text-sm">Lebih banyak prestasi akan datang... 🚀</p>
+      </div>
+     </div>
+    </div>
+   </section><!-- Section Divider -->
+   <div class="section-divider max-w-4xl mx-auto"></div><!-- Contact Section -->
+   <section id="contact" class="py-24 relative">
+    <div class="max-w-6xl mx-auto px-6"><!-- Section Header -->
+     <div class="text-center mb-16">
+      <p class="text-[#d4af37] text-sm font-medium tracking-widest uppercase mb-4">Hubungi Saya</p>
+      <h2 class="font-display text-3xl md:text-4xl font-bold">Mari <span class="gradient-text">Terhubung</span></h2>
+      <p class="text-gray-400 mt-4 max-w-lg mx-auto">Jangan ragu untuk menghubungi saya. Saya selalu terbuka untuk diskusi dan kesempatan baru.</p>
+     </div>
+     <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto"><!-- Contact Info -->
+      <div class="space-y-4"><!-- Email --> <a href="mailto:abiljafa2008@gmail.com" class="glass-card rounded-xl p-6 flex items-center gap-4 hover:border-[#d4af37]/30 transition-all duration-300 group block">
+        <div class="w-14 h-14 bg-[#d4af37]/10 rounded-xl flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
+         📧
+        </div>
+        <div>
+         <p class="text-sm text-gray-400">Email</p>
+         <p id="contact-email-text" class="font-medium group-hover:text-[#d4af37] transition-colors">abiljafa2008@gmail.com</p>
+        </div></a> <!-- WhatsApp --> <a href="https://wa.me/6282320937499" target="_blank" rel="noopener noreferrer" class="glass-card rounded-xl p-6 flex items-center gap-4 hover:border-[#d4af37]/30 transition-all duration-300 group block">
+        <div class="w-14 h-14 bg-[#d4af37]/10 rounded-xl flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
+         💬
+        </div>
+        <div>
+         <p class="text-sm text-gray-400">WhatsApp</p>
+         <p id="contact-whatsapp-text" class="font-medium group-hover:text-[#d4af37] transition-colors">082320937499</p>
+        </div></a> <!-- Social Media -->
+       <div class="glass-card rounded-xl p-6">
+        <p class="text-sm text-gray-400 mb-4">Media Sosial</p>
+        <div class="flex gap-4"><a href="#" class="w-12 h-12 bg-[#d4af37]/10 rounded-xl flex items-center justify-center text-xl hover:bg-[#d4af37]/20 hover:scale-110 transition-all duration-300">
+          <svg viewbox="0 0 24 24" class="w-6 h-6 fill-[#d4af37]"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+          </svg></a> <a href="#" class="w-12 h-12 bg-[#d4af37]/10 rounded-xl flex items-center justify-center text-xl hover:bg-[#d4af37]/20 hover:scale-110 transition-all duration-300">
+          <svg viewbox="0 0 24 24" class="w-6 h-6 fill-[#d4af37]"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+          </svg></a> <a href="#" class="w-12 h-12 bg-[#d4af37]/10 rounded-xl flex items-center justify-center text-xl hover:bg-[#d4af37]/20 hover:scale-110 transition-all duration-300">
+          <svg viewbox="0 0 24 24" class="w-6 h-6 fill-[#d4af37]"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+          </svg></a>
+        </div>
+       </div>
+      </div><!-- Contact Form -->
+      <div class="glass-card rounded-2xl p-8">
+       <h3 class="font-display text-xl font-semibold mb-6">Kirim Pesan</h3>
+       <form id="contact-form" class="space-y-4">
+        <div><label for="name" class="block text-sm text-gray-400 mb-2">Nama</label> <input type="text" id="name" name="name" placeholder="Nama Anda" class="w-full px-4 py-3 bg-[#1a1a2e] border border-[#d4af37]/20 rounded-xl text-white placeholder-gray-500 focus:border-[#d4af37] focus:outline-none transition-colors" required>
+        </div>
+        <div><label for="email" class="block text-sm text-gray-400 mb-2">Email</label> <input type="email" id="email" name="email" placeholder="email@example.com" class="w-full px-4 py-3 bg-[#1a1a2e] border border-[#d4af37]/20 rounded-xl text-white placeholder-gray-500 focus:border-[#d4af37] focus:outline-none transition-colors" required>
+        </div>
+        <div><label for="message" class="block text-sm text-gray-400 mb-2">Pesan</label> <textarea id="message" name="message" rows="4" placeholder="Tulis pesan Anda..." class="w-full px-4 py-3 bg-[#1a1a2e] border border-[#d4af37]/20 rounded-xl text-white placeholder-gray-500 focus:border-[#d4af37] focus:outline-none transition-colors resize-none" required></textarea>
+        </div><button type="submit" class="w-full py-3 bg-gradient-to-r from-[#d4af37] to-[#c9a227] text-[#0a0a0f] font-semibold rounded-xl hover:shadow-lg hover:shadow-[#d4af37]/30 transition-all duration-300 hover:scale-[1.02]"> Kirim Pesan </button>
+       </form>
+       <div id="form-success" class="hidden mt-4 p-4 bg-green-500/10 border border-green-500/30 rounded-xl text-green-400 text-center">
+        ✓ Pesan berhasil dikirim! Terima kasih telah menghubungi saya.
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- Footer -->
+   <footer class="py-8 border-t border-[#d4af37]/10">
+    <div class="max-w-6xl mx-auto px-6">
+     <div class="flex flex-col md:flex-row items-center justify-between gap-4"><!-- Copyright -->
+      <div class="flex items-center gap-3">
+       <div class="w-8 h-8 rounded-full bg-gradient-to-br from-[#d4af37] to-[#f4e4ba] flex items-center justify-center text-[#0a0a0f] font-display font-bold text-sm">
+        S
+       </div>
+       <p class="text-gray-400 text-sm">© 2024 Syabil Jafa Nararya. All rights reserved.</p>
+      </div><!-- Social Links -->
+      <div class="flex items-center gap-4"><a href="#" class="text-gray-400 hover:text-[#d4af37] transition-colors">
+        <svg viewbox="0 0 24 24" class="w-5 h-5 fill-current"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073z" />
+        </svg></a> <a href="#" class="text-gray-400 hover:text-[#d4af37] transition-colors">
+        <svg viewbox="0 0 24 24" class="w-5 h-5 fill-current"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+        </svg></a> <a href="#" class="text-gray-400 hover:text-[#d4af37] transition-colors">
+        <svg viewbox="0 0 24 24" class="w-5 h-5 fill-current"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+        </svg></a>
+      </div><!-- Back to Top --> <a href="#home" class="flex items-center gap-2 text-gray-400 hover:text-[#d4af37] transition-colors text-sm"> <span>Kembali ke Atas</span>
+       <svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+       </svg></a>
+     </div>
+    </div>
+   </footer>
   </div>
   <script>
-  // Theme toggle
-  const themeToggleBtn = document.getElementById('themeToggle');
-  const themeTextSpan = themeToggleBtn.querySelector('span');
-  const themeIcon = themeToggleBtn.querySelector('i');
-
-  function applyTheme() {
-    const mode = localStorage.getItem('bp_theme') || 'dark';
-    if (mode === 'light') {
-      document.body.classList.add('light-mode');
-      themeTextSpan.textContent = 'Mode Terang';
-      themeIcon.classList.remove('fa-moon');
-      themeIcon.classList.add('fa-sun');
-      themeIcon.classList.remove('text-yellow-300');
-      themeIcon.classList.add('text-amber-400');
-    } else {
-      document.body.classList.remove('light-mode');
-      themeTextSpan.textContent = 'Mode Malam';
-      themeIcon.classList.remove('fa-sun', 'text-amber-400');
-      themeIcon.classList.add('fa-moon', 'text-yellow-300');
+    // Default configuration
+    const defaultConfig = {
+      site_name: 'Syabil',
+      tagline: 'Pelajar & Pembelajar',
+      hero_greeting: 'Selamat Datang',
+      hero_name: 'Syabil Jafa Nararya',
+      hero_role: 'Cepat Belajar',
+      about_school: 'Pelajar SMAN 1 SUBANG yang bersemangat dalam menuntut ilmu dan mengembangkan diri.',
+      about_interest: 'Fisika',
+      about_goal: 'Meraih ITB',
+      contact_email: 'abiljafa2008@gmail.com',
+      contact_whatsapp: '082320937499',
+      primary_color: '#d4af37',
+      secondary_color: '#0a0a0f',
+      text_color: '#f3f4f6',
+      accent_color: '#f4e4ba',
+      surface_color: '#1a1a2e',
+      font_family: 'Playfair Display',
+      font_size: 16
+    };
+    
+    let config = { ...defaultConfig };
+    
+    // Mobile menu toggle
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const menuLine1 = document.getElementById('menu-line-1');
+    const menuLine2 = document.getElementById('menu-line-2');
+    const menuLine3 = document.getElementById('menu-line-3');
+    let isMenuOpen = false;
+    
+    mobileMenuBtn.addEventListener('click', () => {
+      isMenuOpen = !isMenuOpen;
+      mobileMenu.classList.toggle('hidden');
+      
+      if (isMenuOpen) {
+        menuLine1.style.transform = 'rotate(45deg) translate(4px, 4px)';
+        menuLine2.style.opacity = '0';
+        menuLine3.style.transform = 'rotate(-45deg) translate(4px, -4px)';
+      } else {
+        menuLine1.style.transform = 'none';
+        menuLine2.style.opacity = '1';
+        menuLine3.style.transform = 'none';
+      }
+    });
+    
+    // Close mobile menu on link click
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        isMenuOpen = false;
+        mobileMenu.classList.add('hidden');
+        menuLine1.style.transform = 'none';
+        menuLine2.style.opacity = '1';
+        menuLine3.style.transform = 'none';
+      });
+    });
+    
+    // Header scroll effect
+    const header = document.getElementById('header');
+    const appWrapper = document.getElementById('app-wrapper');
+    
+    appWrapper.addEventListener('scroll', () => {
+      if (appWrapper.scrollTop > 50) {
+        header.classList.add('py-2');
+      } else {
+        header.classList.remove('py-2');
+      }
+    });
+    
+    // Contact form handling
+    const contactForm = document.getElementById('contact-form');
+    const formSuccess = document.getElementById('form-success');
+    
+    contactForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      // Show success message
+      formSuccess.classList.remove('hidden');
+      contactForm.reset();
+      
+      // Hide success message after 5 seconds
+      setTimeout(() => {
+        formSuccess.classList.add('hidden');
+      }, 5000);
+    });
+    
+    // Intersection Observer for animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, observerOptions);
+    
+    document.querySelectorAll('.glass-card').forEach(card => {
+      card.style.opacity = '0';
+      card.style.transform = 'translateY(20px)';
+      card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+      observer.observe(card);
+    });
+    
+    // onConfigChange function
+    async function onConfigChange(newConfig) {
+      config = { ...config, ...newConfig };
+      
+      // Update navigation
+      const navName = document.getElementById('nav-name');
+      const navTagline = document.getElementById('nav-tagline');
+      if (navName) navName.textContent = config.site_name || defaultConfig.site_name;
+      if (navTagline) navTagline.textContent = config.tagline || defaultConfig.tagline;
+      
+      // Update hero section
+      const heroGreeting = document.getElementById('hero-greeting');
+      const heroName = document.getElementById('hero-name');
+      const heroRole = document.getElementById('hero-role');
+      if (heroGreeting) heroGreeting.textContent = config.hero_greeting || defaultConfig.hero_greeting;
+      if (heroName) heroName.textContent = config.hero_name || defaultConfig.hero_name;
+      if (heroRole) heroRole.textContent = config.hero_role || defaultConfig.hero_role;
+      
+      // Update about section
+      const aboutSchool = document.getElementById('about-school');
+      const aboutInterest = document.getElementById('about-interest');
+      const aboutGoal = document.getElementById('about-goal');
+      if (aboutSchool) aboutSchool.textContent = config.about_school || defaultConfig.about_school;
+      if (aboutInterest) aboutInterest.textContent = config.about_interest || defaultConfig.about_interest;
+      if (aboutGoal) aboutGoal.textContent = config.about_goal || defaultConfig.about_goal;
+      
+      // Update contact section
+      const contactEmailText = document.getElementById('contact-email-text');
+      const contactWhatsappText = document.getElementById('contact-whatsapp-text');
+      if (contactEmailText) contactEmailText.textContent = config.contact_email || defaultConfig.contact_email;
+      if (contactWhatsappText) contactWhatsappText.textContent = config.contact_whatsapp || defaultConfig.contact_whatsapp;
+      
+      // Update font
+      const customFont = config.font_family || defaultConfig.font_family;
+      document.querySelectorAll('.font-display').forEach(el => {
+        el.style.fontFamily = `${customFont}, serif`;
+      });
+      
+      // Update font size
+      const baseSize = config.font_size || defaultConfig.font_size;
+      document.body.style.fontSize = `${baseSize}px`;
     }
-  }
-
-  applyTheme();
-
-  themeToggleBtn.addEventListener('click', () => {
-    const current = localStorage.getItem('bp_theme') || 'dark';
-    const next = current === 'dark' ? 'light' : 'dark';
-    localStorage.setItem('bp_theme', next);
-    applyTheme();
-  });
-
-  // Chatbot simple rules
-  const chatbotToggle = document.getElementById('chatbotToggle');
-  const chatbotWindow = document.getElementById('chatbotWindow');
-  const chatbotClose = document.getElementById('chatbotClose');
-  const chatForm = document.getElementById('chatForm');
-  const chatInput = document.getElementById('chatInput');
-  const chatMessages = document.getElementById('chatMessages');
-
-  function toggleChatbot(open) {
-    const isOpen = open !== undefined ? open : !chatbotWindow.classList.contains('active');
-    if (isOpen) {
-      chatbotWindow.classList.add('active');
-      chatInput.focus();
-    } else {
-      chatbotWindow.classList.remove('active');
+    
+    // mapToCapabilities function
+    function mapToCapabilities(config) {
+      return {
+        recolorables: [
+          {
+            get: () => config.secondary_color || defaultConfig.secondary_color,
+            set: (value) => {
+              config.secondary_color = value;
+              if (window.elementSdk) window.elementSdk.setConfig({ secondary_color: value });
+            }
+          },
+          {
+            get: () => config.surface_color || defaultConfig.surface_color,
+            set: (value) => {
+              config.surface_color = value;
+              if (window.elementSdk) window.elementSdk.setConfig({ surface_color: value });
+            }
+          },
+          {
+            get: () => config.text_color || defaultConfig.text_color,
+            set: (value) => {
+              config.text_color = value;
+              if (window.elementSdk) window.elementSdk.setConfig({ text_color: value });
+            }
+          },
+          {
+            get: () => config.primary_color || defaultConfig.primary_color,
+            set: (value) => {
+              config.primary_color = value;
+              if (window.elementSdk) window.elementSdk.setConfig({ primary_color: value });
+            }
+          },
+          {
+            get: () => config.accent_color || defaultConfig.accent_color,
+            set: (value) => {
+              config.accent_color = value;
+              if (window.elementSdk) window.elementSdk.setConfig({ accent_color: value });
+            }
+          }
+        ],
+        borderables: [],
+        fontEditable: {
+          get: () => config.font_family || defaultConfig.font_family,
+          set: (value) => {
+            config.font_family = value;
+            if (window.elementSdk) window.elementSdk.setConfig({ font_family: value });
+          }
+        },
+        fontSizeable: {
+          get: () => config.font_size || defaultConfig.font_size,
+          set: (value) => {
+            config.font_size = value;
+            if (window.elementSdk) window.elementSdk.setConfig({ font_size: value });
+          }
+        }
+      };
     }
-  }
-
-  chatbotToggle.addEventListener('click', () => toggleChatbot(true));
-  chatbotClose.addEventListener('click', () => toggleChatbot(false));
-
-  function addMessage(text, sender) {
-    const bubble = document.createElement('div');
-    bubble.className = 'chat-bubble ' + (sender === 'user' ? 'user' : 'bot');
-    bubble.textContent = text;
-    chatMessages.appendChild(bubble);
-    chatMessages.scrollTop = chatMessages.scrollHeight;
-  }
-
-  function generateBotReply(message) {
-    const lower = message.toLowerCase();
-
-    if (lower.includes('cuaca') || lower.includes('weather')) {
-      return 'Budapest memiliki empat musim. Musim semi dan gugur adalah waktu terbaik dengan suhu sejuk dan nyaman untuk berjalan kaki.';
+    
+    // mapToEditPanelValues function
+    function mapToEditPanelValues(config) {
+      return new Map([
+        ['site_name', config.site_name || defaultConfig.site_name],
+        ['tagline', config.tagline || defaultConfig.tagline],
+        ['hero_greeting', config.hero_greeting || defaultConfig.hero_greeting],
+        ['hero_name', config.hero_name || defaultConfig.hero_name],
+        ['hero_role', config.hero_role || defaultConfig.hero_role],
+        ['about_school', config.about_school || defaultConfig.about_school],
+        ['about_goal', config.about_goal || defaultConfig.about_goal],
+        ['contact_email', config.contact_email || defaultConfig.contact_email],
+        ['contact_whatsapp', config.contact_whatsapp || defaultConfig.contact_whatsapp]
+      ]);
     }
-    if (lower.includes('berapa hari') || lower.includes('lama') || lower.includes('hari')) {
-      return 'Idealnya, habiskan 3–4 hari di Budapest agar kamu sempat menikmati destinasi utama, pemandian air panas, dan wisata kuliner.';
+    
+    // Initialize Element SDK
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange,
+        mapToCapabilities,
+        mapToEditPanelValues
+      });
     }
-    if (lower.includes('budget') || lower.includes('biaya') || lower.includes('harga')) {
-      return 'Budget backpacker rata-rata sekitar €40–60 per hari, sedangkan perjalanan nyaman sekitar €80–120 per hari, belum termasuk tiket pesawat.';
-    }
-    if (lower.includes('malam') || lower.includes('night') || lower.includes('ruin bar')) {
-      return 'Untuk malam hari, kamu bisa menyusuri Danube Promenade, menikmati city lights dari Buda Castle, atau mengunjungi ruin bars di distrik 7.';
-    }
-    if (lower.includes('makanan') || lower.includes('kuliner') || lower.includes('makan')) {
-      return 'Coba goulash, lángos (roti goreng dengan topping), chimney cake (kürtőskalács), dan kopi di kafe klasik di pusat kota.';
-    }
-    if (lower.includes('transport') || lower.includes('metro') || lower.includes('kereta') || lower.includes('bus') || lower.includes('tram')) {
-      return 'Budapest punya jaringan metro, tram, dan bus yang terintegrasi. Kamu bisa membeli tiket harian atau Budapest Card untuk akses tak terbatas.';
-    }
-
-    return 'Seru! Untuk itu, kamu bisa mulai dari area pusat kota (District V), lalu lanjut ke Buda Castle dan Fisherman\'s Bastion. Jika mau, sebutkan minatmu (kuliner, sejarah, foto, atau relaksasi), aku bisa sarankan rute lebih spesifik.';
-  }
-
-  chatForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const message = chatInput.value.trim();
-    if (!message) return;
-    addMessage(message, 'user');
-    chatInput.value = '';
-    setTimeout(() => {
-      const reply = generateBotReply(message);
-      addMessage(reply, 'bot');
-    }, 400);
-  });
-</script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9a0d7edde3e8807d',t:'MTc2MzUzMjExMy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+    
+    // Initial render
+    onConfigChange(config);
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9c87e94b954a173d',t:'MTc3MDE4NDQ0NS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
